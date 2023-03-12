@@ -2,15 +2,15 @@
 
 if [ -z "$1" ]
 then
-	echo "repository name is missing"
-	exit 1
+	PROJECT_REPO=`pwd`
+	DDIR=$PROJECT_REPO
+else
+	PROJECT_REPO=$1
+	BASE_GIT_ADDR="$HOME/Public/git"
+	DDIR="${BASE_GIT_ADDR}/${PROJECT_REPO}" 
 fi
 
-PROJECT_REPO=$1
-BASE_GIT_ADDR="$HOME/git"
 
-#Create a files index
-DDIR="${BASE_GIT_ADDR}/${PROJECT_REPO}" 
 
 #Handle the special case of handling the linux repo
 test="linux"
@@ -31,7 +31,7 @@ then
 	exit 0
 fi
 
-find $DDIR  -name '*.c' -o -name '*.h' > $DDIR/cscope.files
+find $DDIR  -name '*.c' -o -name '*.h' -o -name '*.py' > $DDIR/cscope.files
 
 #Init the tags file and the cscope file
 cd $DDIR
