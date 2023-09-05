@@ -31,12 +31,14 @@ then
 	exit 0
 fi
 
-find $DDIR  -name '*.c' -o -name '*.h' -o -name '*.py' > $DDIR/cscope.files
 
 #Init the tags file and the cscope file
 cd $DDIR
-ctags -R *
-cscope -Rbq
+
+find $DDIR  -name '*.c' -o -name '*.h' -o -name '*.py' > $DDIR/cscope.files
+ctags -R -L cscope.files
+cscope -Rbq -i cscope.files
+
 
 export CSCOPE_DB=$DDIR/cscope.out
 echo "Done initializing. by default, current cscope_db=$CSCOPE_DB"
