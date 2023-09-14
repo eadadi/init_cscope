@@ -1,20 +1,7 @@
 #!/bin/bash
 
-if [ -z "$1" ]
-then
-	PROJECT_REPO=`pwd`
-	DDIR=$PROJECT_REPO
-else
-	PROJECT_REPO=$1
-	BASE_GIT_ADDR="$HOME/Public/git"
-	DDIR="${BASE_GIT_ADDR}/${PROJECT_REPO}" 
-fi
-
-
-
 #Handle the special case of handling the linux repo
-test="linux"
-if [[ "$PROJECT_REPO" == "$test" ]];
+if [[ "$1" == "linux" ]];
 then
 	echo "Initializing linux repo..."
 	find $DDIR \
@@ -31,16 +18,15 @@ then
 	exit 0
 fi
 
+find . \
+	-path '*/part-support' -prune -o \
+	-name '*.[ch]' -o -name '*.py' \
+	> `pwd`/cscope.files
+ctags -L cscope.files
+cscope -Rbq
 
-#Init the tags file and the cscope file
-cd $DDIR
 
-find $DDIR  -name '*.c' -o -name '*.h' -o -name '*.py' > $DDIR/cscope.files
-ctags -R -L cscope.files
-cscope -Rbq -i cscope.files
-
-
-export CSCOPE_DB=$DDIR/cscope.out
+export CSCOPE_DB=cscope.out
 echo "Done initializing. by default, current cscope_db=$CSCOPE_DB"
 
 exit 0
