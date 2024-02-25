@@ -20,7 +20,7 @@ fi
 
 find . \
 	-path '*/part-support' -prune -o \
-	-name '*.[ch]' -o -name '*.py' \
+	-name '*.[ch]' -o -name '*.py' -o -name '*.cc'\
 	> `pwd`/cscope.files
 ctags -L cscope.files
 cscope -Rbq
