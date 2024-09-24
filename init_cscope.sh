@@ -12,7 +12,7 @@ then
 		-path "$DDIR/drivers" -prune -o \
 		-name "*.[ch]" > $DDIR/cscope.files
 	cd $DDIR
-	ctags -R *
+	ctags-universal -R *
 	cscope -Rbqk
 	echo "Done initializing linux repo"
 	exit 0
@@ -22,7 +22,7 @@ find . \
 	-path '*/part-support' -prune -o \
 	-name '*.[ch]' -o -name '*.py' -o -name '*.cc'\
 	> `pwd`/cscope.files
-ctags -L cscope.files
+ctags-universal -L cscope.files
 cscope -Rbq
 
 
